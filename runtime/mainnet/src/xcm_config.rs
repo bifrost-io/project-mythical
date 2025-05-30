@@ -228,6 +228,16 @@ pub type Reserves = (NativeAsset, ReserveAssetsFrom<AssetHubLocation>);
 pub type TrustedTeleporters = (xcm_builder::Case<AssetHubTrustedTeleporter>,);
 pub type WaivedLocations = ();
 
+pub struct SafeCallFilter;
+impl Contains<RuntimeCall> for SafeCallFilter {
+	fn contains(call: &RuntimeCall) -> bool {
+		match call {
+			RuntimeCall::CollatorStaking(..)  => true,
+			_ => false,
+		}
+	}
+}
+
 pub struct XcmConfig;
 impl xcm_executor::Config for XcmConfig {
 	type RuntimeCall = RuntimeCall;
@@ -259,7 +269,7 @@ impl xcm_executor::Config for XcmConfig {
 	type UniversalAliases = Nothing;
 	type CallDispatcher = RuntimeCall;
 	// Disallow Transacts execution.
-	type SafeCallFilter = Nothing;
+	type SafeCallFilter = SafeCallFilter;
 	type TransactionalProcessor = FrameTransactionalProcessor;
 	type HrmpNewChannelOpenRequestHandler = ();
 	type HrmpChannelAcceptedHandler = ();
