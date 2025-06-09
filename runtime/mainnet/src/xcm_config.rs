@@ -269,7 +269,7 @@ impl xcm_executor::Config for XcmConfig {
 	type UniversalAliases = Nothing;
 	type CallDispatcher = RuntimeCall;
 	// Disallow Transacts execution.
-	type SafeCallFilter = SafeCallFilter;
+	type SafeCallFilter = Everything;
 	type TransactionalProcessor = FrameTransactionalProcessor;
 	type HrmpNewChannelOpenRequestHandler = ();
 	type HrmpChannelAcceptedHandler = ();
